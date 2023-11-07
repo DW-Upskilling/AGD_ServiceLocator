@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8e74d3ac8051946a293339eeee0f8b, type: 3}
+  m_Name: WaveScriptableObject
+  m_EditorClassIdentifier: 
+  SpawnRate: 0.25
+  WaveConfigurations:
+  - {fileID: 11400000, guid: 6122e53498d7ca745993e2b4cacf85da, type: 2}
+  BloonPrefab: {fileID: 5809090260471785846, guid: 36b92d4f037c49f42bb4578971e272e1, type: 3}
+  BloonScriptableObjects:
+  - {fileID: 11400000, guid: 45005e1015669c241a23ada66cdd35d7, type: 2}
+  - {fileID: 11400000, guid: ea94ed707f901674ab17fa92fb1e75fc, type: 2}
+  - {fileID: 11400000, guid: 62dbe99bc77263640a7119cdf12fc398, type: 2}
