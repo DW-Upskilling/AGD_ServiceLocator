@@ -8,13 +8,25 @@ namespace ServiceLocator.Map
 {
     public class MapService : MonoBehaviour
     {
-        [SerializeField] private EventService eventService;
         [SerializeField] private MapScriptableObject mapScriptableObject;
 
         private Grid currentGrid;
         private Tilemap currentTileMap;
         private MapData currentMapData;
         private SpriteRenderer tileOverlay;
+
+        public static MapService Instance { get; private set; }
+
+        private void Awake()
+        {
+            if(Instance == null)
+            {
+                Instance = this;
+            } else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
@@ -23,7 +35,7 @@ namespace ServiceLocator.Map
             ResetTileOverlay();
         }
 
-        private void SubscribeToEvents() => eventService.OnMapSelected.AddListener(LoadMap);
+        private void SubscribeToEvents() => EventService.Instance.OnMapSelected.AddListener(LoadMap);
 
         private void LoadMap(int mapId)
         {

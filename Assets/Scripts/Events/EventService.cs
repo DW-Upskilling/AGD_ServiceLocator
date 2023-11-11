@@ -10,11 +10,20 @@ namespace ServiceLocator.Events
 {
     public class EventService : MonoBehaviour
     {
+        public static EventService Instance { get; private set; }
+
         public GameEventController<int> OnMapSelected { get; private set; }
 
         private void Awake()
         {
-            OnMapSelected = new GameEventController<int>();
+            if(Instance == null)
+            {
+                Instance = this;
+                OnMapSelected = new GameEventController<int>();
+            } else
+            {
+                Destroy(gameObject);
+            }
         }
         
     }
