@@ -3,32 +3,35 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using ServiceLocator.Player;
 using ServiceLocator.Events;
-using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Map
 {
-    public class MapService : GenericMonoSingleton<MapService>
+    public class MapService
     {
-        [SerializeField] private MapScriptableObject mapScriptableObject;
-
+        private MapScriptableObject mapScriptableObject;
         private Grid currentGrid;
         private Tilemap currentTileMap;
         private MapData currentMapData;
         private SpriteRenderer tileOverlay;
 
-        private void Start()
+        public MapService(MapScriptableObject mapScriptableObject)
+        {
+            this.mapScriptableObject = mapScriptableObject;
+        }
+
+        public void Start()
         {
             SubscribeToEvents();
             tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
             ResetTileOverlay();
         }
 
-        private void SubscribeToEvents() => EventService.Instance.OnMapSelected.AddListener(LoadMap);
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnMapSelected.AddListener(LoadMap);
 
         private void LoadMap(int mapId)
         {
             currentMapData = mapScriptableObject.MapDatas.Find(mapData => mapData.MapID == mapId);
-            currentGrid = Instantiate(currentMapData.MapPrefab);
+            currentGrid = GameObject.Instantiate(currentMapData.MapPrefab);
             currentTileMap = currentGrid.GetComponentInChildren<Tilemap>();
         }
 
@@ -126,11 +129,6 @@ namespace ServiceLocator.Map
                     return true;
             }
             return false;
-        }
-
-        protected override void Initialize()
-        {
-            
         }
 
         private enum TileOverlayColor
