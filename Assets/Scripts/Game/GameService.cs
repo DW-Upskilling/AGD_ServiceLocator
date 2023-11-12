@@ -48,6 +48,9 @@ public class GameService : GenericMonoSingleton<GameService>
 
     private void injectDependencies() {
         PlayerService.Init(MapService, SoundService, UIService);
+        MapService.Init(EventService);
+        WaveService.Init(EventService, MapService, SoundService, UIService);
+        UIService.Init(EventService, WaveService);
     }
 
     private void Start()
