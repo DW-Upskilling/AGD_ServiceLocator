@@ -16,22 +16,6 @@ namespace ServiceLocator.Player
             monkeyAnimator = GetComponent<Animator>();
         }
 
-        private void OnTriggerEnter2D(Collider2D collider)
-        {
-            if(collider.TryGetComponent<BloonView>(out BloonView bloonView))
-            {
-                controller.BloonEnteredRange(bloonView.Controller);
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collider)
-        {
-            if (collider.TryGetComponent<BloonView>(out BloonView bloonView))
-            {
-                controller.BloonExitedRange(bloonView.Controller);
-            }
-        }
-
         public void SetController(MonkeyController controller) => this.controller = controller;
 
         public void SetTriggerRadius(float radiusToSet)

@@ -41,13 +41,6 @@ namespace ServiceLocator.Player
             {
                 TrySelectingMonkey();
             }
-            if(activeMonkeys.Count > 0)
-            {
-                foreach(MonkeyController monkey in activeMonkeys)
-                {
-                    monkey.UpdateMonkey();
-                }
-            }
         }
 
         private void TrySelectingMonkey()
