@@ -6,10 +6,11 @@ using ServiceLocator.Events;
 using ServiceLocator.UI;
 using ServiceLocator.Map;
 using ServiceLocator.Sound;
+using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Wave
 {
-    public class WaveService : MonoBehaviour
+    public class WaveService : GenericMonoSingleton<WaveService>
     {
         [SerializeField] private WaveScriptableObject waveScriptableObject;
         private BloonPool bloonPool;
@@ -17,19 +18,6 @@ namespace ServiceLocator.Wave
         private int currentWaveId;
         private List<WaveData> waveDatas;
         private List<BloonController> activeBloons;
-
-        public static WaveService Instance { get; private set; }
-
-        private void Awake()
-        {
-            if(Instance == null)
-            {
-                Instance = this;
-            } else
-            {
-                Destroy(gameObject);
-            }
-        }
 
         private void Start()
         {
@@ -100,5 +88,10 @@ namespace ServiceLocator.Wave
         private bool HasCurrentWaveEnded() => activeBloons.Count == 0;
 
         private bool IsLevelWon() => currentWaveId >= waveDatas.Count;
+
+        protected override void Initialize()
+        {
+            
+        }
     }
 }
