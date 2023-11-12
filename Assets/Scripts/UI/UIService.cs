@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using ServiceLocator.Events;
 using ServiceLocator.Wave;
 using ServiceLocator.Utilities;
+using ServiceLocator.Player;
 
 namespace ServiceLocator.UI
 {
@@ -38,16 +39,22 @@ namespace ServiceLocator.UI
 
         private EventService eventService;
         private WaveService waveService;
+        private PlayerService playerService;
 
-        public void Init(EventService eventService, WaveService waveService)
+        public void Init(EventService eventService, PlayerService playerService, WaveService waveService)
         {
             this.eventService = eventService;
+            this.playerService = playerService;
             this.waveService = waveService;
         }
 
         private void Start()
         {
-            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
+            if (Map1Button.TryGetComponent<MapButton>(out MapButton mapButton)) { 
+                mapButton.Init(eventService);
+            }
+
+            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects, playerService);
             MonkeySelectionPanel.SetActive(false);
             monkeySelectionController.SetActive(false);
 

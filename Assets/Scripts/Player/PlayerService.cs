@@ -39,7 +39,7 @@ namespace ServiceLocator.Player
 
         public void Start()
         {
-            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
+            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects, this);
         }
 
         private void InitializeVariables()
@@ -120,7 +120,7 @@ namespace ServiceLocator.Player
         public void SpawnMonkey(MonkeyType monkeyType, Vector3 spawnPosition)
         {
             MonkeyScriptableObject monkeyScriptableObject = GetMonkeyScriptableObjectByType(monkeyType);
-            MonkeyController monkey = new MonkeyController(monkeyScriptableObject, projectilePool);
+            MonkeyController monkey = new MonkeyController(monkeyScriptableObject, projectilePool, soundService);
             monkey.SetPosition(spawnPosition);
             activeMonkeys.Add(monkey);
 
