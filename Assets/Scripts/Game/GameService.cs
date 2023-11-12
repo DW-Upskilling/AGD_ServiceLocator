@@ -33,11 +33,21 @@ public class GameService : GenericMonoSingleton<GameService>
 
     protected override void Initialize()
     {
+        initializeServices();
+        injectDependencies();
+    }
+
+    private void initializeServices()
+    {
         PlayerService = new PlayerService(playerScriptableObject);
         EventService = new EventService();
         MapService = new MapService(mapScriptableObject);
         WaveService = new WaveService(waveScriptableObject);
         SoundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
+    }
+
+    private void injectDependencies() {
+        PlayerService.Init(MapService, SoundService, UIService);
     }
 
     private void Start()
