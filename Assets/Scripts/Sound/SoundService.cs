@@ -1,26 +1,14 @@
 using System;
 using UnityEngine;
+using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Sound
 {
-    public class SoundService : MonoBehaviour
+    public class SoundService : GenericMonoSingleton<SoundService>
     {
         [SerializeField] private SoundScriptableObject soundScriptableObject;
         [SerializeField] private AudioSource audioEffects;
         [SerializeField] private AudioSource backgroundMusic;
-
-        public static SoundService Instance { get; private set; }
-
-        private void Awake()
-        {
-            if(Instance == null)
-            {
-                Instance = this;
-            } else
-            {
-                Destroy(gameObject);
-            }
-        }
 
         private void Start()
         {
@@ -59,6 +47,11 @@ namespace ServiceLocator.Sound
             if (sound.audio != null)
                 return sound.audio;
             return null;
+        }
+
+        protected override void Initialize()
+        {
+            
         }
     }
 }

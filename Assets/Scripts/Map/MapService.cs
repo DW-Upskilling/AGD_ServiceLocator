@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using ServiceLocator.Player;
 using ServiceLocator.Events;
+using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Map
 {
-    public class MapService : MonoBehaviour
+    public class MapService : GenericMonoSingleton<MapService>
     {
         [SerializeField] private MapScriptableObject mapScriptableObject;
 
@@ -14,19 +15,6 @@ namespace ServiceLocator.Map
         private Tilemap currentTileMap;
         private MapData currentMapData;
         private SpriteRenderer tileOverlay;
-
-        public static MapService Instance { get; private set; }
-
-        private void Awake()
-        {
-            if(Instance == null)
-            {
-                Instance = this;
-            } else
-            {
-                Destroy(gameObject);
-            }
-        }
 
         private void Start()
         {
@@ -138,6 +126,11 @@ namespace ServiceLocator.Map
                     return true;
             }
             return false;
+        }
+
+        protected override void Initialize()
+        {
+            
         }
 
         private enum TileOverlayColor

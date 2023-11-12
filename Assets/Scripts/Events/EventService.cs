@@ -6,25 +6,18 @@ using UnityEngine;
   *  Link: https://outscal.com/courses
   **/
 
+using ServiceLocator.Utilities;
+
 namespace ServiceLocator.Events
 {
-    public class EventService : MonoBehaviour
+    public class EventService : GenericMonoSingleton<EventService>
     {
-        public static EventService Instance { get; private set; }
-
         public GameEventController<int> OnMapSelected { get; private set; }
 
-        private void Awake()
+        protected override void Initialize()
         {
-            if(Instance == null)
-            {
-                Instance = this;
-                OnMapSelected = new GameEventController<int>();
-            } else
-            {
-                Destroy(gameObject);
-            }
+            OnMapSelected = new GameEventController<int>();
         }
-        
+
     }
 }
