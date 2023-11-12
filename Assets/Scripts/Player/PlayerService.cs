@@ -8,9 +8,9 @@ using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Player
 {
-    public class PlayerService : GenericMonoSingleton<PlayerService>
+    public class PlayerService
     {
-        [SerializeField] public PlayerScriptableObject playerScriptableObject;
+        private PlayerScriptableObject playerScriptableObject;
 
         private ProjectilePool projectilePool;
 
@@ -20,7 +20,11 @@ namespace ServiceLocator.Player
 
         public int Money { get; private set; }
 
-        private void Start()
+        public PlayerService(PlayerScriptableObject playerScriptableObject) {
+            this.playerScriptableObject = playerScriptableObject;
+        }
+
+        public void Start()
         {
             projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
             InitializeVariables();
@@ -138,10 +142,5 @@ namespace ServiceLocator.Player
         }
 
         private void PlayerDeath() => UIService.Instance.UpdateGameEndUI(false);
-
-        protected override void Initialize()
-        {
-
-        }
     }
 }
