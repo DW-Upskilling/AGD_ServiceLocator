@@ -9,7 +9,7 @@ using ServiceLocator.Wave;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 
-public class GameService : GenericMonoSingleton<GameService>
+public class GameService : MonoBehaviour
 {
     public PlayerService PlayerService { get; private set; }
     public EventService EventService { get; private set; }
@@ -31,7 +31,7 @@ public class GameService : GenericMonoSingleton<GameService>
     [SerializeField] private AudioSource audioEffects;
     [SerializeField] private AudioSource backgroundMusic;
 
-    protected override void Initialize()
+    private void Awake()
     {
         initializeServices();
         injectDependencies();
@@ -49,8 +49,8 @@ public class GameService : GenericMonoSingleton<GameService>
     private void injectDependencies() {
         PlayerService.Init(MapService, SoundService, UIService);
         MapService.Init(EventService);
-        WaveService.Init(EventService, MapService, SoundService, UIService);
-        UIService.Init(EventService, WaveService);
+        WaveService.Init(EventService, MapService, PlayerService, SoundService, UIService);
+        UIService.Init(EventService, PlayerService, WaveService);
     }
 
     private void Start()
@@ -61,7 +61,6 @@ public class GameService : GenericMonoSingleton<GameService>
         SoundService.Start();
     }
 
-    
     private void Update()
     {
         PlayerService.Update();
